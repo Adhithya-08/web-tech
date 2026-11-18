@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DataVision - DOM Manipulation</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef3f8;
+            color: #17365d;
+            margin: 0;
+        }
+
+        header {
+            background: #17365d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        section {
+            background: white;
+            width: 85%;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px;
+            border: 1px solid #aaa;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #2563a6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #17365d;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>DataVision Analytics</h1>
+    <p>Dynamic Service Management</p>
+</header>
+
+<section>
+    <h2>Add New Service</h2>
+
+    <input type="text" id="serviceName"
+           placeholder="Enter service name">
+
+    <input type="text" id="serviceDesc"
+           placeholder="Enter service description">
+
+    <button id="addBtn">Add Service</button>
+
+    <h2>Available Services</h2>
+
+    <div id="serviceList"></div>
+</section>
+
+<script>
+    const nameInput = document.getElementById("serviceName");
+    const descInput = document.getElementById("serviceDesc");
+    const serviceList = document.querySelector("#serviceList");
+
+    function addService() {
+        let name = nameInput.value.trim();
+        let desc = descInput.value.trim();
+
+        if (name === "" || desc === "") {
+            alert("Please enter all service details!");
+            return;
+        }
+
+        let card = document.createElement("div");
+        card.setAttribute("class", "card");
+
+        let info = document.createElement("div");
+
+        let heading = document.createElement("h3");
+        heading.textContent = name;
+
+        let paragraph = document.createElement("p");
+        paragraph.textContent = desc;
+
+        info.appendChild(heading);
+        info.appendChild(paragraph);
+
+        let editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+
+        editBtn.addEventListener("click", function() {
+            let newName = prompt("Enter new service name:", heading.textContent);
+
+            if (newName !== null && newName.trim() !== "") {
+                heading.textContent = newName.trim();
+            }
+
+            let newDesc = prompt("Enter new description:", paragraph.textContent);
+
+            if (newDesc !== null && newDesc.trim() !== "") {
+                paragraph.textContent = newDesc.trim();
+            }
+        });
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+
+        deleteBtn.addEventListener("click", function() {
+            card.remove();
+        });
+
+        card.appendChild(info);
+        card.appendChild(editBtn);
+        card.appendChild(deleteBtn);
+
+        serviceList.appendChild(card);
+
+        nameInput.value = "";
+        descInput.value = "";
+    }
+
+    document.getElementById("addBtn")
+        .addEventListener("click", addService);
+</script>
+
+</body>
+</html>

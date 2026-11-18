@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataVision Analytics - Responsive Website</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef3f8;
+            color: #17365d;
+        }
+
+        /* Header */
+        header {
+            background-color: #17365d;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        header h1 {
+            font-size: 32px;
+        }
+
+        header p {
+            margin-top: 10px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            background-color: #2563a6;
+            padding: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .hero h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #2563a6;
+        }
+
+        .hero p {
+            font-size: 17px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .hero button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #2563a6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hero button:hover {
+            background-color: #17365d;
+        }
+
+        /* Services */
+        .services {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        .services h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .service-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #2563a6;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #555;
+        }
+
+        /* About Section */
+        .about {
+            background-color: white;
+            padding: 35px;
+            margin: 30px auto;
+            width: 90%;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .about h2 {
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #17365d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* TABLET VIEW */
+        @media screen and (max-width: 900px) {
+
+            header h1 {
+                font-size: 27px;
+            }
+
+            .service-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h2 {
+                font-size: 24px;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+        }
+
+        /* MOBILE VIEW */
+        @media screen and (max-width: 600px) {
+
+            header {
+                padding: 20px 10px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            header p {
+                font-size: 13px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .hero {
+                padding: 30px 15px;
+            }
+
+            .hero h2 {
+                font-size: 21px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .service-container {
+                grid-template-columns: 1fr;
+            }
+
+            .services {
+                width: 92%;
+            }
+
+            .about {
+                width: 92%;
+                padding: 25px 15px;
+            }
+
+            footer {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>DataVision Analytics</h1>
+        <p>Smart Data Solutions for Modern Businesses</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h2>Transform Your Data into Insights</h2>
+
+        <p>
+            DataVision Analytics provides modern data analysis,
+            business intelligence, and technology solutions
+            to help companies make smarter decisions.
+        </p>
+
+        <button onclick="alert('Welcome to DataVision Analytics!')">
+            Explore Services
+        </button>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+
+        <h2>Our Services</h2>
+
+        <div class="service-container">
+
+            <div class="card">
+                <h3>Data Analytics</h3>
+                <p>
+                    Analyze business information and discover
+                    meaningful patterns and insights.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Cloud Computing</h3>
+                <p>
+                    Store, manage, and access data securely
+                    using cloud technologies.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Artificial Intelligence</h3>
+                <p>
+                    Build intelligent systems to automate
+                    business operations.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Cybersecurity</h3>
+                <p>
+                    Protect business information and digital
+                    systems from security threats.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Web Development</h3>
+                <p>
+                    Create modern, responsive, and user-friendly
+                    business websites.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Business Intelligence</h3>
+                <p>
+                    Convert complex data into useful reports
+                    and visual dashboards.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>About DataVision Analytics</h2>
+
+        <p>
+            We are a technology-driven company focused on
+            providing innovative analytics solutions.
+            Our goal is to help organizations improve
+            productivity through data and technology.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>&copy; 2026 DataVision Analytics. All Rights Reserved.</p>
+        <p>Email: info@datavision.com</p>
+    </footer>
+
+</body>
+</html>

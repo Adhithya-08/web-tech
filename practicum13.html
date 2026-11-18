@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DataVision - Task Manager</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f8;
+            color: #17365d;
+            margin: 0;
+        }
+
+        header {
+            background: #17365d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        section {
+            background: white;
+            width: 90%;
+            max-width: 750px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #2563a6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #17365d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #2563a6;
+            color: white;
+        }
+
+        .completed {
+            color: green;
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #c47a00;
+            font-weight: bold;
+        }
+
+        @media(max-width: 600px) {
+            section {
+                width: 92%;
+                padding: 15px;
+                box-sizing: border-box;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>DataVision Analytics</h1>
+    <p>Project Task Management System</p>
+</header>
+
+<section>
+    <h2>Add or Update Task</h2>
+
+    <form id="taskForm">
+        <input type="text" id="taskName"
+               placeholder="Enter task name" required>
+
+        <textarea id="taskDesc"
+                  placeholder="Enter task description"
+                  required></textarea>
+
+        <select id="department" required>
+            <option value="">Select Department</option>
+            <option>Data Analytics</option>
+            <option>Cloud Computing</option>
+            <option>Artificial Intelligence</option>
+            <option>Cybersecurity</option>
+        </select>
+
+        <button type="submit" id="submitBtn">Add Task</button>
+        <button type="button" id="cancelBtn" hidden>Cancel Edit</button>
+    </form>
+
+    <h2>Task List</h2>
+
+    <p id="taskCount"></p>
+
+    <div style="overflow-x:auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="taskList"></tbody>
+        </table>
+    </div>
+</section>
+
+<script>
+    const form = document.getElementById("taskForm");
+    const taskList = document.getElementById("taskList");
+    const taskCount = document.getElementById("taskCount");
+
+    let tasks = JSON.parse(localStorage.getItem("dvTasks")) || [];
+    let editId = null;
+
+    function saveTasks() {
+        localStorage.setItem("dvTasks", JSON.stringify(tasks));
+    }
+
+    function displayTasks() {
+        taskList.innerHTML = "";
+
+        tasks.forEach(function(task) {
+            const row = document.createElement("tr");
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = task.name + " - " + task.description;
+
+            const departmentCell = document.createElement("td");
+            departmentCell.textContent = task.department;
+
+            const statusCell = document.createElement("td");
+            statusCell.textContent = task.status;
+            statusCell.className =
+                task.status === "Completed" ? "completed" : "pending";
+
+            const actionCell = document.createElement("td");
+
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+
+            editButton.addEventListener("click", function() {
+                editTask(task.id);
+            });
+
+            const statusButton = document.createElement("button");
+            statusButton.textContent =
+                task.status === "Completed" ? "Mark Pending" : "Complete";
+
+            statusButton.addEventListener("click", function() {
+                updateStatus(task.id);
+            });
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+
+            deleteButton.addEventListener("click", function() {
+                deleteTask(task.id);
+            });
+
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(statusButton);
+            actionCell.appendChild(deleteButton);
+
+            row.appendChild(nameCell);
+            row.appendChild(departmentCell);
+            row.appendChild(statusCell);
+            row.appendChild(actionCell);
+
+            taskList.appendChild(row);
+        });
+
+        taskCount.textContent = "Total Tasks: " + tasks.length;
+    }
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("taskName").value.trim();
+        const description = document.getElementById("taskDesc").value.trim();
+        const department = document.getElementById("department").value;
+
+        if (!name || !description || !department) {
+            return;
+        }
+
+        if (editId !== null) {
+            const task = tasks.find(function(t) {
+                return t.id === editId;
+            });
+
+            if (task) {
+                task.name = name;
+                task.description = description;
+                task.department = department;
+            }
+
+            editId = null;
+            document.getElementById("submitBtn").textContent = "Add Task";
+            document.getElementById("cancelBtn").hidden = true;
+
+        } else {
+            tasks.push({
+                id: Date.now(),
+                name: name,
+                description: description,
+                department: department,
+                status: "Pending"
+            });
+        }
+
+        saveTasks();
+        displayTasks();
+        form.reset();
+    });
+
+    function editTask(id) {
+        const task = tasks.find(function(t) {
+            return t.id === id;
+        });
+
+        if (!task) return;
+
+        document.getElementById("taskName").value = task.name;
+        document.getElementById("taskDesc").value = task.description;
+        document.getElementById("department").value = task.department;
+
+        editId = id;
+        document.getElementById("submitBtn").textContent = "Update Task";
+        document.getElementById("cancelBtn").hidden = false;
+    }
+
+    function updateStatus(id) {
+        const task = tasks.find(function(t) {
+            return t.id === id;
+        });
+
+        if (task) {
+            task.status =
+                task.status === "Completed" ? "Pending" : "Completed";
+        }
+
+        saveTasks();
+        displayTasks();
+    }
+
+    function deleteTask(id) {
+        tasks = tasks.filter(function(t) {
+            return t.id !== id;
+        });
+
+        if (editId === id) {
+            editId = null;
+            form.reset();
+            document.getElementById("submitBtn").textContent = "Add Task";
+            document.getElementById("cancelBtn").hidden = true;
+        }
+
+        saveTasks();
+        displayTasks();
+    }
+
+    document.getElementById("cancelBtn")
+        .addEventListener("click", function() {
+            editId = null;
+            form.reset();
+            document.getElementById("submitBtn").textContent = "Add Task";
+            this.hidden = true;
+        });
+
+    displayTasks();
+</script>
+
+</body>
+</html>

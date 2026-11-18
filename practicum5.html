@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataVision Analytics - Flexbox Navigation</title>
+
+    <style>
+
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef3f8;
+        }
+
+        /* Header */
+        header {
+            background-color: #17365d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #2563a6;
+            padding: 15px;
+        }
+
+        .navbar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* Logo */
+        .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 12px;
+            transition: 0.3s;
+        }
+
+        /* Hover Effect */
+        .nav-links li a:hover {
+            background-color: white;
+            color: #17365d;
+            border-radius: 5px;
+        }
+
+        /* Main Content */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .container h2 {
+            color: #17365d;
+            margin-bottom: 15px;
+        }
+
+        .container p {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        /* Cards */
+        .services {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #2563a6;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #17365d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* Tablet and Mobile Responsive */
+        @media (max-width: 768px) {
+
+            .navbar {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                justify-content: center;
+                gap: 10px;
+            }
+
+        }
+
+        /* Small Mobile Screens */
+        @media (max-width: 480px) {
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .container h2 {
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>DataVision Analytics</h1>
+        <p>Turning Data into Smart Decisions</p>
+    </header>
+
+    <!-- Responsive Navigation -->
+    <nav>
+        <div class="navbar">
+
+            <div class="logo">
+                DataVision
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container" id="home">
+
+        <h2>Welcome to DataVision Analytics</h2>
+
+        <p>
+            We provide advanced data analytics, artificial intelligence
+            and machine learning solutions to help businesses make
+            smarter decisions.
+        </p>
+
+        <!-- Services -->
+        <section class="services" id="services">
+
+            <div class="card">
+                <h3>Data Analysis</h3>
+                <p>Analyze data and discover meaningful information.</p>
+            </div>
+
+            <div class="card">
+                <h3>Data Visualization</h3>
+                <p>Convert complex data into charts and graphs.</p>
+            </div>
+
+            <div class="card">
+                <h3>Machine Learning</h3>
+                <p>Develop intelligent models for predictions.</p>
+            </div>
+
+        </section>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We help organizations transform raw data into useful business insights.</p>
+        </section>
+
+        <section id="courses">
+            <h2>Our Courses</h2>
+            <p>Python Programming | Data Science | Machine Learning | Power BI</p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Email: info@datavision.com</p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 DataVision Analytics. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

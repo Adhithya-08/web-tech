@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DataVision - Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef3f8;
+            color: #17365d;
+        }
+
+        header {
+            background: #17365d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        form {
+            background: white;
+            width: 85%;
+            max-width: 550px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        fieldset {
+            border: 2px solid #2563a6;
+            padding: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #2563a6;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border: 2px solid #2563a6;
+        }
+
+        input:invalid:not(:placeholder-shown) {
+            border-color: red;
+        }
+
+        input:valid {
+            border-color: green;
+        }
+
+        button {
+            background: #2563a6;
+            color: white;
+            padding: 12px;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #message {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>DataVision Analytics</h1>
+    <p>Employee Registration Portal</p>
+</header>
+
+<form id="registrationForm">
+
+    <fieldset>
+        <legend>Employee Details</legend>
+
+        <label>Full Name</label>
+        <input type="text" id="name"
+               placeholder="Enter your name"
+               minlength="3" maxlength="40"
+               pattern="[A-Za-z ]+"
+               title="Use letters and spaces only"
+               required>
+
+        <label>Email Address</label>
+        <input type="email" id="email"
+               placeholder="example@gmail.com"
+               required>
+
+        <label>Phone Number</label>
+        <input type="tel" id="phone"
+               placeholder="10 digit number"
+               pattern="[0-9]{10}"
+               title="Enter exactly 10 digits"
+               required>
+
+        <label>Age</label>
+        <input type="number" id="age"
+               min="18" max="60"
+               placeholder="Enter your age"
+               required>
+
+        <label>Department</label>
+        <select id="department" required>
+            <option value="">Select Department</option>
+            <option>Data Analytics</option>
+            <option>Cloud Computing</option>
+            <option>Artificial Intelligence</option>
+            <option>Cybersecurity</option>
+            <option>Web Development</option>
+        </select>
+
+        <label>Skills and Experience</label>
+        <textarea id="skills"
+                  minlength="10"
+                  maxlength="200"
+                  placeholder="Describe your skills"
+                  required></textarea>
+
+        <button type="submit">Register</button>
+
+        <p id="message"></p>
+    </fieldset>
+
+</form>
+
+<script>
+    const form = document.getElementById("registrationForm");
+    const message = document.getElementById("message");
+
+    const phone = document.getElementById("phone");
+
+    // Custom validation
+    phone.addEventListener("input", function() {
+        if (phone.value !== "" &&
+            !/^[0-9]{10}$/.test(phone.value)) {
+            phone.setCustomValidity(
+                "Phone number must contain exactly 10 digits."
+            );
+        } else {
+            phone.setCustomValidity("");
+        }
+    });
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        if (form.checkValidity()) {
+            message.textContent =
+                "Registration Successful! Welcome to DataVision Analytics.";
+
+            message.style.color = "green";
+
+            form.reset();
+        } else {
+            form.reportValidity();
+
+            message.textContent =
+                "Please correct the errors in the form.";
+
+            message.style.color = "red";
+        }
+    });
+</script>
+
+</body>
+</html>

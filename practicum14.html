@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DataVision - Service Search</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f8;
+            color: #17365d;
+            margin: 0;
+        }
+
+        header {
+            background: #17365d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        section {
+            width: 90%;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #2563a6;
+        }
+
+        .card h3 {
+            color: #2563a6;
+        }
+
+        .category {
+            display: inline-block;
+            background: #d9eaf8;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        #result {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        @media(max-width: 800px) {
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 550px) {
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                width: 92%;
+                padding: 15px;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>DataVision Analytics</h1>
+    <p>Explore Our Technology Services</p>
+</header>
+
+<section>
+    <h2>Search and Filter Services</h2>
+
+    <div class="filters">
+        <input type="text" id="searchInput"
+               placeholder="Search services...">
+
+        <select id="categoryFilter">
+            <option value="All">All Categories</option>
+            <option value="Analytics">Analytics</option>
+            <option value="Cloud">Cloud</option>
+            <option value="AI">Artificial Intelligence</option>
+            <option value="Security">Security</option>
+            <option value="Development">Development</option>
+        </select>
+    </div>
+
+    <p id="result"></p>
+
+    <div class="service-grid" id="serviceGrid">
+
+        <div class="card" data-category="Analytics">
+            <h3>Data Analytics</h3>
+            <span class="category">Analytics</span>
+            <p>Discover insights from business information.</p>
+        </div>
+
+        <div class="card" data-category="Cloud">
+            <h3>Cloud Computing</h3>
+            <span class="category">Cloud</span>
+            <p>Store and manage data using cloud platforms.</p>
+        </div>
+
+        <div class="card" data-category="AI">
+            <h3>Artificial Intelligence</h3>
+            <span class="category">AI</span>
+            <p>Build intelligent systems for automation.</p>
+        </div>
+
+        <div class="card" data-category="Security">
+            <h3>Cybersecurity</h3>
+            <span class="category">Security</span>
+            <p>Protect systems from digital threats.</p>
+        </div>
+
+        <div class="card" data-category="Development">
+            <h3>Web Development</h3>
+            <span class="category">Development</span>
+            <p>Develop modern and responsive websites.</p>
+        </div>
+
+        <div class="card" data-category="Analytics">
+            <h3>Business Intelligence</h3>
+            <span class="category">Analytics</span>
+            <p>Convert data into useful business reports.</p>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const cards = document.querySelectorAll(".card");
+    const result = document.getElementById("result");
+
+    function filterServices() {
+        const searchText = searchInput.value.toLowerCase();
+        const selectedCategory = categoryFilter.value;
+
+        let count = 0;
+
+        cards.forEach(function(card) {
+            const name = card.querySelector("h3")
+                              .textContent.toLowerCase();
+
+            const description = card.querySelector("p")
+                                    .textContent.toLowerCase();
+
+            const category = card.getAttribute("data-category");
+
+            const matchesSearch =
+                name.includes(searchText) ||
+                description.includes(searchText);
+
+            const matchesCategory =
+                selectedCategory === "All" ||
+                category === selectedCategory;
+
+            if (matchesSearch && matchesCategory) {
+                card.classList.remove("hidden");
+                card.style.display = "block";
+                count++;
+            } else {
+                card.classList.add("hidden");
+                card.style.display = "none";
+            }
+        });
+
+        result.textContent = count + " service(s) found.";
+    }
+
+    searchInput.addEventListener("input", filterServices);
+
+    categoryFilter.addEventListener("change", filterServices);
+
+    filterServices();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DataVision - Custom Toggle Switch</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f8;
+            color: #17365d;
+            margin: 0;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        header {
+            background: #17365d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 650px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: background 0.4s;
+        }
+
+        .setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Hide original checkbox */
+        .toggle-input {
+            appearance: none;
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+
+        /* Custom toggle switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 65px;
+            height: 34px;
+            background: #aaa;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.4s;
+            flex-shrink: 0;
+        }
+
+        /* Toggle circle */
+        .switch::before {
+            content: "";
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            left: 4px;
+            top: 4px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.4s;
+        }
+
+        /* Checked state */
+        .toggle-input:checked + .switch {
+            background: #2563a6;
+        }
+
+        .toggle-input:checked + .switch::before {
+            transform: translateX(31px);
+        }
+
+        .toggle-input:focus-visible + .switch {
+            outline: 3px solid #ffbf47;
+            outline-offset: 3px;
+        }
+
+        /* Dark mode */
+        body.dark {
+            background: #17202b;
+            color: #f1f5f9;
+        }
+
+        body.dark .container {
+            background: #263445;
+            color: white;
+        }
+
+        body.dark header {
+            background: #101820;
+        }
+
+        #status {
+            margin-top: 25px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #17365d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>DataVision Analytics</h1>
+    <p>Application Settings Dashboard</p>
+</header>
+
+<div class="container">
+
+    <h2>Display Settings</h2>
+
+    <p>Customize your DataVision Analytics experience.</p>
+
+    <div class="setting">
+
+        <div>
+            <p><strong>Dark Mode</strong></p>
+            <p>Enable or disable the dark theme.</p>
+        </div>
+
+        <div>
+            <input type="checkbox"
+                   id="darkToggle"
+                   class="toggle-input">
+
+            <label for="darkToggle"
+                   class="switch"
+                   aria-label="Toggle dark mode">
+            </label>
+        </div>
+
+    </div>
+
+    <p id="status">Light Mode is enabled.</p>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 DataVision Analytics. All Rights Reserved.</p>
+</footer>
+
+<script>
+    const darkToggle = document.getElementById("darkToggle");
+    const status = document.getElementById("status");
+
+    // Get previously saved setting
+    const savedMode = localStorage.getItem("darkMode");
+
+    // Apply saved setting when page loads
+    if (savedMode === "enabled") {
+        darkToggle.checked = true;
+        document.body.classList.add("dark");
+        status.textContent = "Dark Mode is enabled.";
+    }
+
+    // Change theme when toggle is clicked
+    darkToggle.addEventListener("change", function() {
+
+        document.body.classList.toggle("dark", darkToggle.checked);
+
+        if (darkToggle.checked) {
+            localStorage.setItem("darkMode", "enabled");
+            status.textContent = "Dark Mode is enabled.";
+        } else {
+            localStorage.setItem("darkMode", "disabled");
+            status.textContent = "Light Mode is enabled.";
+        }
+
+    });
+</script>
+
+</body>
+</html>
